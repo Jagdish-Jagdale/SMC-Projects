@@ -33,7 +33,7 @@ const SectionHeading = ({ subtitle, title, description, center = true, light = f
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
-      className={`mb-16 ${center ? 'text-center' : ''}`}
+      className={`mb-12 ${center ? 'text-center' : ''}`}
     >
       {subtitle && (
         <motion.span 

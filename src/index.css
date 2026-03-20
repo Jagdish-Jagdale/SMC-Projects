@@ -43,6 +43,7 @@
   
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
+  --radius-button: 0.6rem;
 }
 
 /* ===== Base Styles ===== */
@@ -141,7 +142,7 @@
   background: var(--color-accent);
   color: #ffffff;
   padding: 14px 32px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-button);
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
@@ -164,7 +165,7 @@
   background: transparent;
   color: var(--color-primary);
   padding: 14px 32px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-button);
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid var(--color-primary);
@@ -183,7 +184,7 @@
   background: var(--color-primary);
   color: white;
   padding: 14px 32px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-button);
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;

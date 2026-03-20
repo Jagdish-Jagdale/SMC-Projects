@@ -27,12 +27,6 @@ const Navbar = () => {
   const { settings, loading } = useSettings();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious();
-    if (latest > previous && latest > 150) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
     setScrolled(latest > 50);
   });
 
@@ -58,11 +52,7 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      variants={{
-        visible: { y: 0 },
-        hidden: { y: "-100%" }
-      }}
-      animate={hidden ? "hidden" : "visible"}
+      animate="visible"
       transition={{ duration: 0.35, ease: "easeInOut" }}
       className={navbarClasses}
     >
@@ -148,7 +138,7 @@ const Navbar = () => {
               </a>
               <Link
                 to="/contact"
-                className="btn-primary whitespace-nowrap text-xs !py-3 !px-3 !rounded-lg shadow-md hover:shadow-accent/20"
+                className="btn-primary whitespace-nowrap text-xs !py-3 !px-3 !rounded-md shadow-md hover:shadow-accent/20"
               >
                 Get in Touch
               </Link>
@@ -202,7 +192,7 @@ const Navbar = () => {
               <div className="pt-4 border-t border-gray-100">
                 <Link
                   to="/contact"
-                  className="btn-primary block text-center text-sm py-3 rounded-lg"
+                  className="btn-primary block text-center text-sm py-3 rounded-md"
                 >
                   Get in Touch
                 </Link>

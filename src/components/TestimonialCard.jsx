@@ -7,7 +7,7 @@ const TestimonialCard = ({ testimonial, index = 0 }) => {
   const { name, review, message, rating, photo, photoUrl } = testimonial;
   const content = review || message;
   const image = photo || photoUrl;
-  
+
   // 3D Tilt Values
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -24,7 +24,7 @@ const TestimonialCard = ({ testimonial, index = 0 }) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
-    
+
     const xPct = (e.clientX - rect.left) / width - 0.5;
     const yPct = (e.clientY - rect.top) / height - 0.5;
     x.set(xPct);
@@ -40,105 +40,51 @@ const TestimonialCard = ({ testimonial, index = 0 }) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9, y: 30 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ 
-        duration: 1.2, 
-        delay: index * 0.1,
-        ease: [0.16, 1, 0.3, 1]
-      }}
-      className="perspective-1000 h-full py-6" // Added padding for the floating bobbing
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <motion.div
-        style={{ 
-          rotateX, 
-          rotateY, 
-          transformStyle: "preserve-3d" 
-        }}
-        animate={{
-          y: [0, -10, 0], // Gentle bobbing
-        }}
-        transition={{
-          y: {
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: index * 0.5
-          }
-        }}
-        className="relative bg-white/80 backdrop-blur-2xl p-10 rounded-[2.5rem] border-[3px] border-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_100px_-20px_rgba(37,99,235,0.2)] transition-all duration-500 h-full flex flex-col group overflow-hidden hover:border-accent/40"
-      >
-        {/* Shimmer Effect - More intense on hover */}
-        <motion.div
-          style={{
-            background: useTransform(
-              [mouseX, mouseY],
-              ([latestX, latestY]) => 
-                `radial-gradient(circle at ${latestX}px ${latestY}px, rgba(37,99,235,0.2) 0%, transparent 70%)`
-            ),
-          }}
-          className="absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        />
-
-        {/* Dynamic Background Glow */}
-        <div className="absolute top-0 left-0 w-full h-full bg-accent/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-        {/* Floating Quote Icon */}
-        <div 
-          style={{ transform: "translateZ(60px)" }}
-          className="absolute top-8 right-8 text-accent/10 group-hover:text-accent/20 transition-colors duration-500"
-        >
-          <HiMiniChatBubbleBottomCenterText className="w-16 h-16" />
+    <div className="h-full py-2">
+      <div className="relative bg-white p-6 rounded-lg border border-gray-200 shadow-sm transition-all duration-300 hover:shadow-md h-full flex flex-col overflow-hidden">
+        {/* Elegant Circular Quote - Top Right */}
+        <div className="absolute top-4 right-5 w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center text-accent/80 transition-colors duration-300 group-hover:bg-accent/20">
+          <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M464 256h-80v-64c0-35.3 28.7-64 64-64h16V64h-16c-70.7 0-128 57.3-128 128v192h144V256zM272 256h-80v-64c0-35.3 28.7-64 64-64h16V64h-16c-70.7 0-128 57.3-128 128v192h144V256z"></path>
+          </svg>
         </div>
 
-        {/* Stars */}
-        <div className="flex gap-1.5 mb-8 relative z-10" style={{ transform: "translateZ(40px)" }}>
-          {[...Array(5)].map((_, i) => (
-            <HiStar
-              key={i}
-              className={`w-5 h-5 ${i < rating ? 'text-yellow-400' : 'text-gray-200'} transition-transform duration-500 group-hover:scale-110`}
-              style={{ transitionDelay: `${i * 50}ms` }}
-            />
-          ))}
-        </div>
-
-        {/* Review Content */}
-        <div style={{ transform: "translateZ(30px)" }} className="relative z-10 flex-grow">
-          <p className="text-gray-700 text-xl leading-relaxed italic font-medium font-[Outfit]">
-            "{content}"
-          </p>
-        </div>
-
-        {/* Author Section */}
-        <div 
-          style={{ transform: "translateZ(50px)" }} 
-          className="flex items-center gap-5 pt-8 mt-10 border-t border-gray-100 relative z-10"
-        >
+        {/* Header - Avatar and Name */}
+        <div className="flex items-center gap-3 mb-3 relative z-10">
           {image ? (
             <img
               src={image}
               alt={name}
-              className="w-16 h-16 rounded-2xl object-cover ring-4 ring-white shadow-xl group-hover:scale-110 transition-transform duration-500"
+              className="w-10 h-10 rounded-full object-cover"
             />
           ) : (
-            <div className="w-16 h-16 rounded-2xl gradient-primary flex items-center justify-center text-white font-bold text-xl shadow-xl group-hover:scale-110 transition-transform duration-500">
+            <div className="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center font-bold text-sm">
               {getInitials(name)}
             </div>
           )}
-          <div>
-            <h4 className="font-bold text-primary text-lg font-[Outfit] group-hover:text-accent transition-colors duration-300">{name}</h4>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <p className="text-gray-400 font-bold text-[10px] uppercase tracking-widest pt-0.5">Verified Client</p>
-            </div>
+          <div className="flex flex-col">
+            <span className="font-semibold text-[#3c4043] text-[15px]">{name}</span>
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+
+        {/* Stars - Google Style */}
+        <div className="flex gap-0.5 mb-2.5 relative z-10">
+          {[...Array(5)].map((_, i) => (
+            <HiStar
+              key={i}
+              className={`w-4 h-4 ${i < rating ? 'text-[#f8b80e]' : 'text-gray-200'}`}
+            />
+          ))}
+        </div>
+
+        {/* Review Content - Clean Sans-serif */}
+        <div className="flex-grow relative z-10">
+          <p className="text-[#3c4043] text-[14px] leading-relaxed font-normal font-[Roboto,sans-serif] px-1">
+            {content}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 
