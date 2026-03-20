@@ -43,7 +43,7 @@ const HeroSection = () => {
         const activeBanners = (data || [])
           .filter(b => b.active !== false)
           .sort((a, b) => a.order - b.order);
-        
+
         if (activeBanners.length > 0) {
           setBanners(activeBanners);
         }
@@ -58,7 +58,7 @@ const HeroSection = () => {
     if (banners.length > 1) {
       const interval = setInterval(
         () => setCurrentSlide(prev => (prev + 1) % banners.length),
-        6000
+        3500
       );
       return () => clearInterval(interval);
     }
@@ -72,17 +72,17 @@ const HeroSection = () => {
   return (
     <section
       ref={heroRef}
-      className="relative w-full h-[500px] lg:h-[calc(100vh-80px)] mt-20 flex items-center overflow-hidden bg-[#0d1720]"
+      className="relative w-full h-[500px] lg:h-[calc(100vh-80px)] mt-20 flex items-center overflow-hidden bg-black"
     >
       {/* ── Background Slider ── */}
       <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           <motion.div
             key={currentSlide}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
             className="absolute inset-0"
             style={{
               backgroundImage: `url(${banners[currentSlide]?.imageUrl})`,
@@ -94,8 +94,8 @@ const HeroSection = () => {
         </AnimatePresence>
 
         {/* Multi-layer overlay for depth */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0d1720]/75 via-[#0d1720]/45 to-[#0d1720]/15" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0d1720]/50 via-transparent to-[#0d1720]/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
       </div>
 
       {/* ── Slide Dots ── */}
